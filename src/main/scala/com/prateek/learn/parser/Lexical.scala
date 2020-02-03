@@ -10,19 +10,20 @@ object Main extends App with PackratParsers with TokenParsers {
 
   type Tokens = LexicalTokens
   final val lexical = LexicalTokenizer
-  test("_erty1[assa]")
-  test("[[asas]")
-  test("----")
-  test("[]]]as]")
-  test("asdf[a]")
-  test("asdf[a][")
-  test("asdf[")
-  test("[")
-  test("[fgfgh]")
+  println(test("_erty1[assa]"))
+  println(test("[[asas]"))
+  println(test("----"))
+  println(test("[]]]as]"))
+  println(test("asdf[a]"))
+  println(test("asdf[a]["))
+  println(test("asdf["))
+  println(test("["))
+  println(test("[fgfgh]"))
 
-  private def test(param: String): Try[Int] = {
+  private def test(inputStr: String): Try[Int] = {
+    println(inputStr)
     lazy val packratReader: Main.PackratReader[LexicalTokenizer.Token] =
-      new PackratReader(new LexicalTokenizer.Scanner(param))
+      new PackratReader(new LexicalTokenizer.Scanner(inputStr))
     lazy val packratParser: PackratParser[Int] = tokenToParser(
       LexicalTokenizer.StringLiteralObj
     ) ^^^ 1
@@ -33,8 +34,8 @@ object Main extends App with PackratParsers with TokenParsers {
     }
   }
 
-  private def tokenToParser(token: Elem): Parser[token.type] =
-    elem(token).asInstanceOf[Parser[token.type]]
+  private def tokenToParser(token: Elem) =
+    elem(token)
 }
 
 trait LexicalTokens extends Tokens {
