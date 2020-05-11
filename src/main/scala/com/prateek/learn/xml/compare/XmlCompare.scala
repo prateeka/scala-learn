@@ -15,7 +15,7 @@ object XmlCompare extends App {
       e2AttributeValue != null && e2AttributeValue == a.value
     }
 
-    e1.attributes.filter(_.value != null).forall(contains(_))
+    e1.attributes.filter(_.value != null).forall(contains)
   }
 
   def apply(exp: Node, act: Node): Boolean = {
