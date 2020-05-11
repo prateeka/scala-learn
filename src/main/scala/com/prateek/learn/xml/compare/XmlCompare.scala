@@ -15,12 +15,14 @@ object XmlCompare extends App {
       e2AttributeValue != null && e2AttributeValue == a.value
     }
 
-    e1.attributes.filter(_.value != null).forall(contains)
+    e1.attributes.filter(_.value != null).forall(contains(_))
   }
 
   def apply(exp: Node, act: Node): Boolean = {
+    import scala.xml.Text
     (exp, act) match {
       case (e: Elem, a: Elem) => labelMatch(e, a) && attributesMatch(e, a)
+      case (e: Text, a: Text) => e.text.equalsIgnoreCase(a.text)
       case _                  => false
     }
   }
