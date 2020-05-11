@@ -75,7 +75,7 @@ object Main extends App {
       * This is the hard coded location of all MDX properties.
       */
     private val propertiesSource =
-      "/Users/prateek/code/pattu/scala-learn/src/main/resources/mdx-properties"
+      "/Users/prateek/code/pattu/scala-learn/src/main/resources/regex/propertiesmatch/mdx-properties"
     def apply(): Seq[String] = {
       Reader.apply(
         new File(propertiesSource),
