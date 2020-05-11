@@ -10,13 +10,13 @@ object XmlCompare extends App {
         labelMatch(e, a) &&
           attributesMatch(e, a) &&
           e.child.forall(e1 =>
-            act.child.exists(a1 => {
+            a.child.exists(a1 => {
               println(s"expected $e1 \n actual $a1")
               apply(e1, a1)
             })
           )
-      case (e: Text, a: Text) => e.text.equalsIgnoreCase(a.text)
-      case _                  => false
+      case (Text(t1), Text(t2)) => t1.trim == t2.trim
+      case _                    => false
     }
   }
 
