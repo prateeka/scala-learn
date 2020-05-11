@@ -1,22 +1,31 @@
 package com.prateek.learn.xml.compare
 
-object XmlCompare extends App {
-  import scala.xml.Elem
-  def apply(): Boolean = {
-    val book: Elem =
-      <Member Hierarchy="[DateCustom].[Retail445]"> hello
-      <UName>[DateCustom].[Retail445].[Reporting Day].&amp;[2001-04-07T00:00:00]</UName>
-      <Caption>Saturday, April 07 2001</Caption>
-      <LName>[DateCustom].[Retail445].[Reporting Day]</LName>
-      <LNum>6</LNum>
-      <DisplayInfo>2</DisplayInfo>
-      <PARENT_UNIQUE_NAME>[DateCustom].[Retail445].[Reporting Year].&amp;[2001-01-07T00:00:00].&amp;[2001-01-07T00:00:00].&amp;[2001]&amp;[1].&amp;[2001-03-04T00:00:00].&amp;[2001-04-01T00:00:00]</PARENT_UNIQUE_NAME>
-    </Member>
+import scala.xml.{Elem, MetaData, Node}
 
-//    println(book.text)
-    book.child.foreach(println)
-    true
+object XmlCompare extends App {
+
+  /** Returns 'true' if the attributes in e1 are included in e2.  */
+  private def attributesMatch(e1: Elem, e2: Elem): Boolean = {
+    def contains(a: MetaData) = {
+      val e2AttributeValue =
+        if (a.isPrefixed)
+          e2.attributes(a.getNamespace(e1), e2.scope, a.key)
+        else
+          e2.attributes(a.key)
+      e2AttributeValue != null && e2AttributeValue == a.value
+    }
+
+    e1.attributes.filter(_.value != null).forall(contains(_))
   }
 
-  apply()
+  def apply(exp: Node, act: Node): Boolean = {
+    (exp, act) match {
+      case (e: Elem, a: Elem) => labelMatch(e, a) && attributesMatch(e, a)
+      case _                  => false
+    }
+  }
+
+  def labelMatch(e1: Elem, e2: Elem) =
+    e1.label == e2.label &&
+      e1.scope.getURI(e1.prefix) == e2.scope.getURI(e2.prefix)
 }
