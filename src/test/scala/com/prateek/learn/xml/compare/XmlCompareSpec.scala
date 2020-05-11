@@ -44,8 +44,10 @@ class XmlCompareSpec extends AnyFreeSpec with Matchers {
 
     "text comparison" - {
       "match" in {
-        val exp = <Caption>first</Caption>
-        val act = <Caption>first</Caption>
+        val exp =
+          <Caption>[DateCustom].[Retail445].[Reporting Day].&amp;[2001-04-07T00:00:00]</Caption>
+        val act =
+          <Caption>[DateCustom].[Retail445].[Reporting Day].&amp;[2001-04-07T00:00:00]</Caption>
         XmlCompare.apply(exp.child.head, act.child.head) should be(true)
       }
 
@@ -54,7 +56,26 @@ class XmlCompareSpec extends AnyFreeSpec with Matchers {
         val act = <Caption>second</Caption>
         XmlCompare.apply(exp.child.head, act.child.head) should be(false)
       }
+    }
 
+    "child comparison" - {
+      "match" in {
+        val exp =
+          <Member Hierarchy="[DateCustom].[Retail445]">
+            <UName>[DateCustom].[Retail445].[Reporting Day].&amp;[2001-04-07T00:00:00]</UName>
+            <Caption>Saturday, April 07 2001</Caption>
+            <DisplayInfo>2</DisplayInfo>
+          </Member>
+
+        val act =
+          <Member Hierarchy="[DateCustom].[Retail445]">
+            <UName>[DateCustom].[Retail445].[Reporting Day].&amp;[2001-04-07T00:00:00]</UName>
+            <Caption>Saturday, April 07 2001</Caption>
+            <DisplayInfo>2</DisplayInfo>
+          </Member>
+
+        XmlCompare.apply(exp, act) should be(true)
+      }
     }
   }
 }
