@@ -62,14 +62,14 @@ class XmlCompareSpec extends AnyFreeSpec with Matchers {
       "match" in {
         val exp =
           <Member Hierarchy="[DateCustom].[Retail445]">
-            <UName>[DateCustom].[Retail445].[Reporting Day].&amp;[2001-04-07T00:00:00]</UName>
+            <UName>[DateCustom].[Retail445].[Reporting Day]</UName>
             <Caption>Saturday, April 07 2001</Caption>
             <DisplayInfo>2</DisplayInfo>
           </Member>
 
         val act =
           <Member Hierarchy="[DateCustom].[Retail445]">
-            <UName>[DateCustom].[Retail445].[Reporting Day].&amp;[2001-04-07T00:00:00]</UName>
+            <UName>[DateCustom].[Retail445].[Reporting Day]</UName>
             <Caption>Saturday, April 07 2001</Caption>
             <DisplayInfo>2</DisplayInfo>
           </Member>
